@@ -1,0 +1,77 @@
+Data Mining SC2
+
+- Due for : 
+- Evaluation : 
+    - notebook + predictive model
+    - 5-10mins presentation in front of the students showcasing interesting stuff (not saying basic stuff you did, but rather presenting unusual and interesting stuff found in the dataset)
+
+- Horaire : 3x4h (surement insuffisant)
+- L’idée est de partir des données brutes jusqu’à arriver à un modèle qui permet de répondre à une question
+- Chaque jeu de données représente la partie d’un joueur (i.e toutes les touches sur lesquelles il appuie à un moment précis). Le but est de savoir si chaque joueur a une signature numérique reconnaissable
+- Mettre en oeuvre des techniques de fouille de données (Data Mining) pour découvrir les données (
+    - quelles sont les features intéressantes
+    - découvrir de nouvelles features
+- But :
+    - décrire mon modèle : combien de temps de jeu minimum il faut, combien de parties minimum, pour prédire correctement
+- Libs utilisées 
+    - Scikitlearn
+    - Notebook
+- Datasets
+    - Train.csv : Columns
+        - player id
+        - player faction (Protoss, Terran, Zerg)
+        - next several columns : set of actions (e.g « Base » means he selected his base, « s » means used his mouse, « hotkey30 » is the key 3 with the mode 0, « t10 » means time marker 10seconds) => sequential data. 
+        - For each action, you don’t have the exact time but you can frame it between two timeframes (e.g t10 and t15)
+- the RAW datasets are only to be looked at if your model works perfectly well on the normal datasets (last year only one group used it)
+
+
+- YOU NEED TO UNDERSTAND THE DATASET MORE. HOW ? see his study on twitch
+    - if you notice something strange ask the dude, he won’t reach out to you unless you do
+- FIRST OBJECTIVE : BE ABLE TO MAKE A PREDICTION WITH A SIMPLE MODEL ABOUT WHO’S PLAYING 
+    - PREPROCESSING WAS DONE FOR YOU WITH A BASIC DECISION TREE
+    - ONE HINT : TRANSFORM THE ROUGH SEQUENTIAL DATA INTO TABULAR DATA => BUILD TABULAR DATASET COMPOSED OF FEATURES (Feature 1 = faction, each action next is a feature (e.g Base is a feature, and then you count its occurences, for example Base = 2 if the player used Base2 twice) 
+    - then use basic random forests or decision trees to make the prediction model) 
+    - The tX shouldn’t be features, but they should be used for example : I want to know what happened in the first 30 seconds (cause at the end we need to know how much time is needed for our model to be accurate, can it predict the player within 30 seconds ? 2 minutes ? 1 hour ?). TIME MARKERS ARE TO BE USED TO BUILD ANALYSES
+    - FIRST OBJECTIVE SHOULD BE SUBMITTED IN KAGGLE BEFORE THE NEXT SESSION (the quality of the predictions aren’t important, just use a basic prediction tree on the test dataset and submit it to Kaggle)
+- WHEN YOU HAVE THE BASIC PIPELINE IN PLACE YOU CAN CHOOSE TO INVESTIGATE SOMETHING IN PARTICULAR (e.g using MCTS, using metaevaluation, using random forests and showing the influence of parameters, 
+
+
+
+« In the TRAIN.csv dataset, there are no feature actually. It start with the ID of the player (a URL). Then it gives you -ok- ONE feature (its faction among terran, zerg, protoss). Then, a sequence of actions is given. Actions are detailed in the data section of the Kaggle. Your goal is actually to build your own features from the rough data. What I propose you as feature, is the count (and/or frequency) for each Hotkey (and/or for each hotkey usage) during all the game, or a giving windows of time of the game (the first 5seconds or the 1 minute…) »
+
+
+
+UNDERSTAND WHICH FEATURES ARE THE MOST IMPORTANT : 
+
+- Use decision trees
+    -  Build it then look at it : what can you understand from it
+
+
+HOW TO IMPROVE THE SCORE ?
+-> Data Mining, understand the data more, to better build the features
+- Imbalanced Class Distribution (can you guess why?there is a reason. hint : those games come from competitions, some teams play a lot, other teams only play a few teams in the competition) (see discord message)
+        - ideas : remove some games of players that have too many games, or duplicate classes that don’t have many games
+        - empty games should be removed
+        - ask the question : is the model sensible to class imbalance ? it’s not always the case
+        - AdaBoost
+        - I see that in the machine learning project, pr. Duffner told you also about imbalanced classes. I gave you some hints two weeks ago in that direction. This may be a major problem. To know if it will be a problem, just plot the class distribution (basically, an histogram counting for each player how many games he played). You training set should have the same normalized distribution than the test set for your cross validations. More generally, data viz. is a excellent tool to help you increase your predictions : this is the first data mining step (mining with the eyes). Another example, did you plot distribution of the game lengths ? Of the number of average number of actions per seconds per player during the x first minutes ?
+- Imbalanced game lengths (hint: game played on the internet, sometimes it can break). You shouldn’t deal with all games the same way. -> NORMALIZED FEATURES (i.e nb of actions per windows of time)
+
+IMPROVING THE SCORE
+1. DATA VIZ
+2. FEATURE ENGINEERING (improved by dataviz)
+
+CHOOSE ONE TECHNIQUE AND STUDY IT
+examples :
+1. RANDOM FORESTS (influence of the parameters)
+2. NEURAL NET
+
+Remarks :
+- Random forests : 20 trees or 200, the accuracy doesn’t improve too much ? some group did a chart last year
+
+
+
+EVALUATION
+- presentation
+- public notation
+
